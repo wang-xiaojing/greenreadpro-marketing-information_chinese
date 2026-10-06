@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenRead Pro - 高尔夫果岭坡度测量应用</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            line-height: 1.9;
+            color: #333;
+            background: #f7f8fa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1f6f43 0%, #2E8B57 55%, #4CAF7D 100%);
+            color: #fff;
+            text-align: center;
+            padding: 64px 16px 56px;
+        }
+        .header img {
+            width: 120px;
+            height: 120px;
+            border-radius: 28px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 2.0em;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+        .header .subtitle {
+            font-size: 1.1em;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+        .header .badges {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .header .badge {
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 0.85em;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 36px 28px;
+            margin: 28px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        section h2 {
+            font-size: 1.35em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        section h3 {
+            font-size: 1.05em;
+            color: #4a5568;
+            margin: 24px 0 10px;
+        }
+        section p {
+            font-size: 0.95em;
+            margin-bottom: 12px;
+        }
+        section ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+        section li {
+            font-size: 0.95em;
+            margin-bottom: 6px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .feature-card .icon {
+            font-size: 1.6em;
+            margin-bottom: 8px;
+        }
+        .feature-card h3 {
+            margin: 0 0 6px 0;
+            font-size: 0.95em;
+            color: #333;
+        }
+        .feature-card p {
+            font-size: 0.85em;
+            color: #666;
+            margin: 0;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 14px;
+            margin-top: 8px;
+        }
+        .step {
+            background: #eef7f1;
+            border-radius: 12px;
+            padding: 18px;
+        }
+        .step .num {
+            display: inline-block;
+            background: #2E8B57;
+            color: #fff;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 26px;
+            font-size: 0.85em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .step h3 {
+            margin: 0 0 6px 0;
+            font-size: 0.95em;
+            color: #1f6f43;
+        }
+        .step p {
+            font-size: 0.85em;
+            color: #555;
+            margin: 0;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 48px 16px;
+        }
+        .cta-section h2 {
+            font-size: 1.3em;
+            border: none;
+            margin-bottom: 12px;
+            padding: 0;
+        }
+        .cta-section p {
+            color: #666;
+            margin-bottom: 24px;
+        }
+        .appstore-button {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 12px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.0em;
+            transition: opacity 0.2s;
+        }
+        .appstore-button:hover { opacity: 0.85; }
+
+        .privacy-box {
+            background: #eef7f1;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 24px 0;
+            font-size: 0.9em;
+        }
+        .privacy-box h3 {
+            color: #1f6f43;
+            margin: 0 0 8px 0;
+        }
+        .privacy-box p { margin: 0; }
+
+        .device-note {
+            background: #eef5ff;
+            border-left: 4px solid #4A90D9;
+            border-radius: 4px;
+            padding: 16px 20px;
+            margin: 24px 0;
+            font-size: 0.9em;
+        }
+
+        .caution-note {
+            background: #fff8f0;
+            border-left: 4px solid #ed8936;
+            border-radius: 4px;
+            padding: 16px 20px;
+            margin: 24px 0;
+            font-size: 0.9em;
+        }
+
+        footer {
+            text-align: center;
+            color: #aaa;
+            font-size: 0.8em;
+            padding: 40px 16px;
+        }
+        footer a {
+            color: #888;
+            text-decoration: none;
+        }
+        footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 640px) {
+            .feature-grid { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr; }
+            .header { padding: 48px 16px 40px; }
+            .header h1 { font-size: 1.6em; }
+            header img { width: 90px; height: 90px; }
+            section { padding: 24px 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <img src="GreenReadPro_Icon.jpg" alt="GreenRead Pro 图标" onerror="this.style.display='none'">
+    <h1>GreenRead Pro</h1>
+    <p class="subtitle">GreenRead Pro - 高尔夫果岭坡度测量与推杆线路辅助</p>
+    <div class="badges">
+        <span class="badge">LiDAR 高精度测量</span>
+        <span class="badge">无需注册账号</span>
+        <span class="badge">测量数据仅保存在本机</span>
+    </div>
+</header>
+
+<div class="container">
+
+    <section>
+        <h2>让果岭坡度在现场“可视化”。</h2>
+        <p>
+            GreenRead Pro 是一款利用 iPhone / iPad 的 LiDAR 扫描仪与相机，
+            测量高尔夫果岭坡度并辅助推杆读线的应用。
+        </p>
+        <p>
+            只需将真实球位与旗位（旗杆）对准画面，并把设备姿态调整到水平，
+            即可将距离、高低差、Break（弯曲）、下坡方向和预计滚动线路直接叠加显示在相机画面上。
+        </p>
+        <p>
+            无需繁琐的账号注册，全部测量均在设备本地完成。
+            即使在信号较弱或无网络的球场，也可正常使用。
+        </p>
+    </section>
+
+    <section>
+        <h2>主要功能</h2>
+        <div class="feature-grid">
+
+            <div class="feature-card">
+                <div class="icon">⛳</div>
+                <h3>LiDAR 坡度测量</h3>
+                <p>基于 LiDAR 捕捉到的果岭 3D 形态估算坡度，并以箭头显示下坡方向。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🎯</div>
+                <h3>点击放置球位与旗位</h3>
+                <p>按压画面即可显示放大圆，精确对齐真实球位与旗位，也支持自动切换流程。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">📏</div>
+                <h3>距离与高低差</h3>
+                <p>显示球到旗的 3D 直线距离（m / cm / yd），并清晰标注上坡（＋）与下坡（−）高低差。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🌀</div>
+                <h3>Break（弯曲）分析</h3>
+                <p>计算球的偏转量和方向（H=左 / S=右），并可根据果岭速度调整 Break 分配。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🟦</div>
+                <h3>滚动线路与瞄准线</h3>
+                <p>以蓝色曲线显示预计推杆轨迹，以红色虚线显示瞄准方向，读线更直观。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🧭</div>
+                <h3>设备姿态仪表</h3>
+                <p>通过 X / Y 仪表引导设备水平；当接近 0° 时自动 Hold，快速锁定测量结果。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">📊</div>
+                <h3>果岭断面图</h3>
+                <p>以断面图展示球到旗的高低变化，不仅看数值，也能直观看地形趋势。</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">💾</div>
+                <h3>设置备份与恢复</h3>
+                <p>可将自定义设置导出为 JSON 并恢复；换机或重装后也能快速还原。</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <h2>使用方式，仅需 3 步</h2>
+        <div class="steps">
+            <div class="step">
+                <span class="num">1</span>
+                <h3>放置球位</h3>
+                <p>让真实球与旗都进入画面，使用放大圆十字对准球位。</p>
+            </div>
+            <div class="step">
+                <span class="num">2</span>
+                <h3>放置旗位</h3>
+                <p>同样使用放大圆十字对准旗位（旗杆），完成后将切换到测量显示。</p>
+            </div>
+            <div class="step">
+                <span class="num">3</span>
+                <h3>调整姿态并确认</h3>
+                <p>当仪表指针接近 0° 时会自动 Hold，即可查看线路与测量值。</p>
+            </div>
+        </div>
+        <p style="margin-top:16px; font-size:0.85em; color:#666;">
+            ※ 保持设备水平，并将球与旗尽量放在画面中央附近，可获得更稳定的测量结果。
+        </p>
+    </section>
+
+    <section>
+        <h2>适合这类用户</h2>
+        <ul>
+            <li>在坡度难判断的果岭上，希望获得更明确读线依据的用户</li>
+            <li>希望当场确认上坡 / 下坡对距离感影响的用户</li>
+            <li>在练习轮中研究“坡度与 Break 关系”的用户</li>
+            <li>在击球前需要快速掌握含高低差距离信息的用户</li>
+            <li>想在推杆练习前后记录与复盘果岭趋势的用户</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>免费试用与购买</h2>
+        <p>
+            首次启动时在提示中选择“OK”，即可<strong>累计免费体验 1 小时</strong>全部功能。
+            体验时间结束后，应用会自动切换为功能受限体验版。
+        </p>
+        <p>
+            全功能版为一次性应用内购买（非消耗型）。购买后可使用以下内容：
+        </p>
+        <ul>
+            <li>解锁并修改全部设置项</li>
+            <li>使用设置备份（导出 / 恢复）功能</li>
+            <li>隐藏应用内横幅广告</li>
+        </ul>
+        <p>
+            购买会永久绑定到 Apple ID。更换设备或重装后，
+            可通过“恢复购买”免费恢复。具体价格以 App Store 购买页面显示为准。
+        </p>
+    </section>
+
+    <div class="privacy-box">
+        <h3>隐私</h3>
+        <p>
+            测量数据与设置内容仅保存在您的设备本地。
+            相机与 LiDAR 获取的数据仅用于测量处理，不会上传到外部服务器。
+            同时，应用无需账号注册即可使用。
+        </p>
+    </div>
+
+    <div class="device-note">
+        <strong>运行环境</strong><br>
+        本应用需要配备 LiDAR 扫描仪的设备（iPhone 12 Pro 及以上、iPad Pro）。
+        不支持 LiDAR 的设备无法使用坡度测量功能。
+    </div>
+
+    <div class="caution-note">
+        <strong>关于测量精度</strong><br>
+        本应用显示的坡度、距离、高低差与 Break，可能会受 LiDAR 传感器性能、直射阳光、草坪湿度、
+        测量距离、设备角度以及手部抖动等因素影响而产生误差。页面中显示的数据仅供参考，
+        不保证绝对准确。基于显示结果做出的任何判断，均由用户自行承担责任。
+        另外，比赛规则或本地规则可能限制回合中电子设备的使用，请务必提前确认正式比赛中的可用性。
+    </div>
+
+    <div class="cta-section">
+        <h2>立即下载</h2>
+        <p>先免费体验累计 1 小时全部功能，再决定是否购买。</p>
+        <a href="#" class="appstore-button">在 App Store 查看</a>
+    </div>
+
+</div>
+
+<footer>
+    <p>
+        <a href="https://wang-xiaojing.github.io/greenreadpro-privacy-policy_chinese/">隐私政策</a>
+        &nbsp;|&nbsp;
+        <a href="https://wang-xiaojing.github.io/greenreadpro-supportpage_chinese/">支持页面</a>
+        &nbsp;
+    </p>
+    <p style="margin-top: 12px;">&copy; 2026 wang xiaojing. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
